@@ -16,6 +16,7 @@ public class Sum implements Command {
     private Sovelluslogiikka sovellus;
     private JTextField tuloskentta;
     private JTextField syotekentta;
+    private int previous_value = 0;
 
     public Sum(Sovelluslogiikka s, JTextField tulos, JTextField syote) {
         sovellus = s;
@@ -33,6 +34,7 @@ public class Sum implements Command {
         } catch (Exception e) {
         }
         
+        previous_value = input;
         sovellus.plus(input);
         
         result = sovellus.tulos();
@@ -43,6 +45,14 @@ public class Sum implements Command {
     
     @Override
     public void reverse() {
+       int result = 0;
+
+       sovellus.miinus(previous_value);
        
+       result = sovellus.tulos();
+        
+       syotekentta.setText("");
+       tuloskentta.setText("" + result);
     }
+    
 }

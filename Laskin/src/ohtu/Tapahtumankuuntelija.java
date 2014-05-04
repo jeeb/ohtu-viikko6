@@ -25,19 +25,20 @@ public class Tapahtumankuuntelija implements ActionListener {
         commands.put(plus, new Sum(sovellus, tuloskentta, syotekentta));
         commands.put(miinus, new Subtraction(sovellus, tuloskentta, syotekentta));
         commands.put(nollaa, new Reset(sovellus, tuloskentta, syotekentta));
+        commands.put(undo, null);
         
         last_command = null;
     }
     
     @Override
     public void actionPerformed(ActionEvent ae) {
-        Command command = commands.get(ae.getSource());
+        Command command = commands.get((JButton)ae.getSource());
         
         if (command != null) {
             command.execute();
             last_command = command;
         } else {
-            last_command.execute();
+            last_command.reverse();
             last_command = null;
         }
         

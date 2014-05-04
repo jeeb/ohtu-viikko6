@@ -16,6 +16,7 @@ public class Reset implements Command {
     private Sovelluslogiikka sovellus;
     private JTextField tuloskentta;
     private JTextField syotekentta;
+    private int previous_value = 0;
     
     public Reset(Sovelluslogiikka s, JTextField tulos, JTextField syote) {
         sovellus = s;
@@ -27,6 +28,8 @@ public class Reset implements Command {
     public void execute() {
         int result = 0;
         
+        previous_value = sovellus.tulos();
+        
         sovellus.nollaa();
         
         result = sovellus.tulos();
@@ -37,6 +40,13 @@ public class Reset implements Command {
     
     @Override
     public void reverse() {
+        int result = 0;
         
+        sovellus.plus(previous_value);
+        
+        result = sovellus.tulos();
+        
+        syotekentta.setText("");
+        tuloskentta.setText("" + result);
     }
 }

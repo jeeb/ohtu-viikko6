@@ -16,6 +16,7 @@ public class Subtraction implements Command {
     private Sovelluslogiikka sovellus;
     private JTextField tuloskentta;
     private JTextField syotekentta;
+    private int previous_value = 0;
     
     public Subtraction(Sovelluslogiikka s, JTextField tulos, JTextField syote) {
         sovellus = s;
@@ -33,6 +34,8 @@ public class Subtraction implements Command {
         } catch (Exception e) {
         }
         
+        previous_value = input;
+        
         sovellus.miinus(input);
         
         result = sovellus.tulos();
@@ -43,6 +46,13 @@ public class Subtraction implements Command {
     
     @Override
     public void reverse() {
+        int result = 0;
         
+        sovellus.plus(previous_value);
+        
+        result = sovellus.tulos();
+        
+        syotekentta.setText("");
+        tuloskentta.setText("" + result);
     }
 }
