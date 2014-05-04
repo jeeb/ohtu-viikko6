@@ -11,7 +11,7 @@ public class IntJoukko {
 
     // Main constructor, all other constructors call this one
     public IntJoukko(int kapasiteetti, int kasvatuskoko) {
-        if (kapasiteetti < 0 || kasvatuskoko < 0) {
+        if (kapasiteetti < 1 || kasvatuskoko < 1) {
             throw new IndexOutOfBoundsException("One or more invalid values given to constructor: " + kapasiteetti +
                                                 ", " + kasvatuskoko);
         }
@@ -30,27 +30,45 @@ public class IntJoukko {
     }
 
     public boolean lisaa(int luku) {
+        // in case of the array being empty, just add the number
+        if (isEmpty()) {
+            addEntry(luku);
+            return true;
+        }
 
-        int eiOle = 0;
-        if (alkioidenLkm == 0) {
-            ljono[0] = luku;
-            alkioidenLkm++;
-            return true;
+        // otherwise check if the value exists in the array;
+        // if it exists, return false
+        if (kuuluu(luku)) {
+            return false;
+        // if it doesn't exist, we will try to add it
         } else {
-        }
-        if (!kuuluu(luku)) {
-            ljono[alkioidenLkm] = luku;
-            alkioidenLkm++;
-            if (alkioidenLkm % ljono.length == 0) {
-                int[] taulukkoOld = new int[ljono.length];
-                taulukkoOld = ljono;
-                kopioiTaulukko(ljono, taulukkoOld);
-                ljono = new int[alkioidenLkm + kasvatuskoko];
-                kopioiTaulukko(taulukkoOld, ljono);
+            // if the array is full, create a new, bigger one
+            if (isFull()) {
+                rescaleArray(ljono.length + kasvatuskoko);
             }
+            addEntry(luku);
+
             return true;
         }
-        return false;
+    }
+
+    private void addEntry(int num) {
+        ljono[alkioidenLkm] = num;
+        alkioidenLkm++;
+    }
+
+    private void rescaleArray(int new_size) {
+        int[] new_array = new int[ljono.length + kasvatuskoko];
+        kopioiTaulukko(ljono, new_array);
+        ljono = new_array;
+    }
+
+    private boolean isFull() {
+        return ljono.length == alkioidenLkm;
+    }
+
+    private boolean isEmpty() {
+        return alkioidenLkm == 0;
     }
 
     public boolean kuuluu(int luku) {
