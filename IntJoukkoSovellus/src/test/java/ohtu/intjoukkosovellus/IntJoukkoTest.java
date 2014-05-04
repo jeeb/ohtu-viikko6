@@ -69,6 +69,12 @@ public class IntJoukkoTest {
         assertFalse(joukko.kuuluu(11));
         assertEquals(13, joukko.mahtavuus());
     }
+
+    @Test
+    public void removeSomethingNonexistant() {
+        assertFalse(joukko.kuuluu(9001));
+        assertFalse(joukko.poista(9001));
+    }
     
     @Test
     public void toStringToimii(){

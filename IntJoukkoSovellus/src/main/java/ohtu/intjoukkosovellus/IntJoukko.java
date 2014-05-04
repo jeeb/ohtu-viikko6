@@ -146,9 +146,9 @@ public class IntJoukko {
     }
    
 
-    public static IntJoukko yhdiste(IntJoukko a, IntJoukko b) {
+    public IntJoukko yhdiste(IntJoukko b) {
         IntJoukko x = new IntJoukko();
-        int[] aTaulu = a.toIntArray();
+        int[] aTaulu = toIntArray();
         int[] bTaulu = b.toIntArray();
         for (int i = 0; i < aTaulu.length; i++) {
             x.lisaa(aTaulu[i]);
@@ -159,9 +159,9 @@ public class IntJoukko {
         return x;
     }
 
-    public static IntJoukko leikkaus(IntJoukko a, IntJoukko b) {
+    public IntJoukko leikkaus(IntJoukko b) {
         IntJoukko y = new IntJoukko();
-        int[] aTaulu = a.toIntArray();
+        int[] aTaulu = toIntArray();
         int[] bTaulu = b.toIntArray();
         for (int i = 0; i < aTaulu.length; i++) {
             for (int j = 0; j < bTaulu.length; j++) {
@@ -174,9 +174,9 @@ public class IntJoukko {
 
     }
     
-    public static IntJoukko erotus ( IntJoukko a, IntJoukko b) {
+    public IntJoukko erotus(IntJoukko b) {
         IntJoukko z = new IntJoukko();
-        int[] aTaulu = a.toIntArray();
+        int[] aTaulu = toIntArray();
         int[] bTaulu = b.toIntArray();
         for (int i = 0; i < aTaulu.length; i++) {
             z.lisaa(aTaulu[i]);
