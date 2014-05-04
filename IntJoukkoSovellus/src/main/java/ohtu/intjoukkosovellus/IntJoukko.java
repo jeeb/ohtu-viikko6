@@ -57,6 +57,10 @@ public class IntJoukko {
         alkioidenLkm++;
     }
 
+    private void zeroSpot(int pos) {
+        ljono[pos] = 0;
+    }
+
     private void rescaleArray(int new_size) {
         int[] new_array = new int[ljono.length + kasvatuskoko];
         kopioiTaulukko(ljono, new_array);
@@ -72,40 +76,39 @@ public class IntJoukko {
     }
 
     public boolean kuuluu(int luku) {
+        return givePosition(luku) != -1;
+    }
+
+    private int givePosition(int luku) {
         for (int i = 0; i < alkioidenLkm; i++) {
             if (ljono[i] == luku) {
-                return true;
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 
     public boolean poista(int luku) {
-        int kohta = -1;
-        int apu;
-        for (int i = 0; i < alkioidenLkm; i++) {
-            if (luku == ljono[i]) {
-                kohta = i; //siis luku löytyy tuosta kohdasta :D
-                ljono[kohta] = 0;
-                break;
-            }
-        }
-        if (kohta != -1) {
-            for (int j = kohta; j < alkioidenLkm - 1; j++) {
-                apu = ljono[j];
-                ljono[j] = ljono[j + 1];
-                ljono[j + 1] = apu;
-            }
-            alkioidenLkm--;
-            return true;
+        int position = givePosition(luku);
+        if (position == -1) {
+            return false;
         }
 
+        moveValuesOneBackwards(position);
+        return true;
+    }
 
-        return false;
+    private void moveValuesOneBackwards(int start_point) {
+        for (int i = start_point; i < alkioidenLkm - 1; i++) {
+            ljono[i] = ljono[i+1];
+        }
+
+        zeroSpot(alkioidenLkm - 1);
+        alkioidenLkm--;
     }
 
     private void kopioiTaulukko(int[] vanha, int[] uusi) {
-        for (int i = 0; i < vanha.length; i++) {
+        for (int i = 0; i < alkioidenLkm; i++) {
             uusi[i] = vanha[i];
         }
 
